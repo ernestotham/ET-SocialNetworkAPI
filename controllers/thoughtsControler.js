@@ -43,7 +43,7 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
       },
     
-    deleteUser(req, res) {
+    deleteThought(req, res) {
         thought.findOneAndDelete({ _id: req.params.thoughtId })
           .then((thoughtv) =>
             !thoughtv
@@ -55,7 +55,8 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
       },
 
-
+     addReaction(){},
+     removeReaction(){}, 
 
 }
 
