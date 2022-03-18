@@ -1,28 +1,28 @@
-const {thought} = require('../models');
+const {Thought} = require('../models');
 
 module.exports = {
 
 
     getThoughts(req, res) {
-        thought.find()
+        Thought.find()
           .then((thoughts) => res.json(thoughts))
           .catch((err) => res.status(500).json(err));
       },
 
     getSingleThought(req, res) {
-        thought.findOne({ _id: req.params.thoughtId })
+        Thought.findOne({ _id: req.params.thoughtId })
           .select('-__v')
-          .then((thoughtv) =>
-            !thoughtv
+          .then((thought) =>
+            !thought
               ? res.status(404).json({ message: 'No thought with that ID' })
-              : res.json(thoughtv)
+              : res.json(thought)
           )
           .catch((err) => res.status(500).json(err));
       },
     
     createThought(req, res) {
-        thought.create(req.body)
-          .then((thoughtv) => res.json(thoughtv))
+        Thought.create(req.body)
+          .then((thought) => res.json(thought))
           .catch((err) => {
             console.log(err);
             return res.status(500).json(err);
@@ -30,26 +30,26 @@ module.exports = {
       },
     
     updateThought(req, res) {
-        thought.findOneAndUpdate(
+        Thought.findOneAndUpdate(
           { _id: req.params.thoughtId },
           { $set: req.body },
           { runValidators: true, new: true }
         )
-          .then((thoughtv) =>
-            !thoughtv
+          .then((thought) =>
+            !thought
               ? res.status(404).json({ message: 'No thought with this id!' })
-              : res.json(thoughtv)
+              : res.json(thought)
           )
           .catch((err) => res.status(500).json(err));
       },
     
     deleteThought(req, res) {
-        thought.findOneAndDelete({ _id: req.params.thoughtId })
-          .then((thoughtv) =>
-            !thoughtv
+        Thought.findOneAndDelete({ _id: req.params.thoughtId })
+          .then((thought) =>
+            !thought
               ? res.status(404).json({ message: 'No user with that ID' })
               : console.log("pending code here")
-            //   : thoughtv.deleteMany({ _id: { $in: thought.friends } })
+            //   : thought.deleteMany({ _id: { $in: thought.friends } })
           )
           .then(() => res.json({ message: 'user and friends deleted!' }))
           .catch((err) => res.status(500).json(err));
