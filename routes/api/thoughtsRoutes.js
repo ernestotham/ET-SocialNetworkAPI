@@ -14,7 +14,7 @@ const {
 
 
 // /api/thoughts
-router.router('/').get(getThoughts).post(createThought);
+router.route('/').get(getThoughts).post(createThought);
 
 
 // /api/users/:userId

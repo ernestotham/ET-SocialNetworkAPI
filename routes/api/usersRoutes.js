@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+
 const {
     getUsers,
     getSingleUser,
@@ -12,7 +13,7 @@ const {
 } = require('../../controllers/usersController.js');
 
 // /api/users
-router.router('/').get(getUsers).post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
 
 // /api/users/:userId

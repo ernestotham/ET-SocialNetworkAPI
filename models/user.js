@@ -1,24 +1,22 @@
-const { Schema, Types } = require('mongoose');
+const { default: mongoose } = require('mongoose');
+const { Schema, Types, model  } = require('mongoose');
+
 
 const userSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    userName: {
+     userName: {
       type: String,
       required: true,
-      unique:true,
+      unique: true,
       trim: true,
-            
+
     },
     email: {
       type: String,
       required: true,
-      unique:true,
+      unique: true,
       trim: true,
-      match: `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`,
+      match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
     },
     thoughts: [
       {
@@ -31,9 +29,9 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'userSchema'
-    }
+      }
     ],
-    
+
   },
   {
     toJSON: {
