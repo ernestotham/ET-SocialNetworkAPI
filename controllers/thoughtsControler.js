@@ -74,28 +74,20 @@ module.exports = {
 
 
      removeReaction(req, res) {
-      Thought.findOneAndUpdate({ _id: req.params.thoughtId })
-        .then((thought) =>
-          !thought
-            ? res.status(404).json({ message: 'No thought found for this  ID!!!' })
-            : Thought.findOneAndUpdate(
-              { _id: req.params.thoughtId },
-              { $pull: { _id: req.params.reactionId } },
-              { new: true }
-            )
+      Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: { _id: req.params.reactionId } } },
+        { runValidators: true, new: true }
+      )
+        .then((student) =>
+          !student
+            ? res
+                .status(404)
+                .json({ message: 'No student found with that ID :(' })
+            : res.json(student)
         )
-        // .then((thought) =>
-        //   !thought
-        //     ? res.status(404).json({
-        //       message: 'reaction deleted',
-        //     })
-        //     : res.json({ message: 'reaction successfully deleted' })
-        // )
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-      },
+        .catch((err) => res.status(500).json(err));
+    },
 }
 
 
